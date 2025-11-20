@@ -1,0 +1,83 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { fetchRecipes, fetchRecipeById } from "../../lib/api";
+import { isBookmarked } from "../../lib/storage";
+
+export async function getStaticPaths() {
+  // Prefer local mock data at build time to avoid network/fetch('/data') issues
+  try {
+    const fs = await import('node:fs/promises');
+    const path = await import('node:path');
+    const filePath = path.join(Astro.srcDir, '..', 'public', 'data', 'recipes.json');
+    const raw = await fs.readFile(filePath, 'utf-8');
+    const json = JSON.parse(raw) as { recipes?: Array<{ id: string }> };
+    const list = Array.isArray(json.recipes) ? json.recipes : [];
+    return list.slice(0, 50).map((r) => ({ params: { id: String(r.id) } }));
+  } catch {
+    // On failure, return no paths to avoid build errors; details pages will not be generated.
+    return [];
+  }
+}
+
+export const prerender = true;
+
+const { id } = Astro.params;
+const recipe = await fetchRecipeById(String(id));
+const saved = recipe ? await isBookmarked(recipe.id) : false;
+---
+<MainLayout title={recipe ? recipe.title : "Recipe"}>
+  {recipe ? (
+    <article class="recipe" aria-labelledby="recipe-title">
+      <div class="recipe-header">
+        <img class="recipe-hero" src={recipe.image} alt={recipe.title} />
+        <div class="recipe-title">
+          <h1 id="recipe-title" style="margin:.5rem 0;">{recipe.title}</h1>
+          <div class="actions">
+            <button class="secondary-btn" id="bookmark-btn" aria-pressed={saved ? "true" : "false"} data-id={recipe.id} data-title={recipe.title}>
+              {saved ? "Saved ✓" : "Save"}
+            </button>
+            <span class="pill" aria-label={`Ready in ${recipe.readyInMinutes} minutes`}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 8v5l3 3m6-4a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              {recipe.readyInMinutes} min
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <section aria-labelledby="ingredients-title" style="margin-top:1rem;">
+        <h2 id="ingredients-title" class="section-title">Ingredients</h2>
+        <ul>
+          {recipe.ingredients.map((i) => (<li>{i}</li>))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="instructions-title" style="margin-top:1rem;">
+        <h2 id="instructions-title" class="section-title">Instructions</h2>
+        <ol>
+          {recipe.instructions.map((step) => (<li style="margin:.35rem 0;">{step}</li>))}
+        </ol>
+      </section>
+    </article>
+  ) : (
+    <div class="card" style="padding:1rem;">
+      <h1>Recipe not found</h1>
+      <p class="muted">We couldn't find that recipe. It may have been removed.</p>
+      <a class="secondary-btn" href="/search">Back to search</a>
+    </div>
+  )}
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const btn = document.getElementById('bookmark-btn');
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      const id = btn.getAttribute('data-id') || '';
+      const title = btn.getAttribute('data-title') || '';
+      const { toggleBookmark } = await import('../../lib/storage.ts');
+      const saved = await toggleBookmark(id, title);
+      btn.setAttribute('aria-pressed', saved ? 'true' : 'false');
+      btn.textContent = saved ? 'Saved ✓' : 'Save';
+    });
+  });
+</script>

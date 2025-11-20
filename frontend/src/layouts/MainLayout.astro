@@ -1,0 +1,40 @@
+---
+import ThemeToggle from "../components/ThemeToggle.astro";
+import Header from "../components/Header.astro";
+import "../styles/theme.css";
+const { title = "Recipe Explorer" } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Browse, search, and view recipes." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <style>
+      /* Subtle page gradient for Ocean Professional */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(60% 50% at 10% 0%, rgba(37,99,235,0.08), transparent 60%),
+                    radial-gradient(40% 40% at 90% 10%, rgba(245,158,11,0.08), transparent 60%);
+        pointer-events: none;
+        z-index: 0;
+      }
+      main { position: relative; z-index: 1; }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main class="container">
+      <slot />
+    </main>
+    <footer class="container footer" role="contentinfo" aria-label="Footer">
+      <div>© {new Date().getFullYear()} Recipe Explorer</div>
+      <div class="muted">Ocean Professional theme</div>
+    </footer>
+    <ThemeToggle />
+  </body>
+</html>

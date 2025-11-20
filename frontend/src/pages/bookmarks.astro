@@ -1,0 +1,18 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { getBookmarks } from "../lib/storage";
+
+export const prerender = true;
+
+const items = await getBookmarks();
+---
+<MainLayout title="Bookmarks">
+  <h1 style="margin-top:0;">Bookmarks</h1>
+  {items.length === 0 ? (
+    <p class="muted">No bookmarks yet. Save your favorite recipes to find them quickly.</p>
+  ) : (
+    <ul>
+      {items.map((b) => (<li><a href={`/recipe/${b.id}`}>{b.title}</a></li>))}
+    </ul>
+  )}
+</MainLayout>

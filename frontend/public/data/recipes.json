@@ -1,0 +1,120 @@
+{
+  "recipes": [
+    {
+      "id": "1",
+      "title": "Creamy Garlic Pasta",
+      "image": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1200&auto=format&fit=crop",
+      "summary": "A silky, rich pasta coated in a garlicky cream sauce with parmesan.",
+      "readyInMinutes": 25,
+      "ingredients": ["pasta", "garlic", "cream", "parmesan", "butter", "salt", "pepper"],
+      "instructions": [
+        "Cook pasta in salted boiling water until al dente.",
+        "Sauté minced garlic in butter, add cream and simmer.",
+        "Stir in parmesan, then toss with pasta. Season to taste."
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Tomato Basil Soup",
+      "image": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1200&auto=format&fit=crop",
+      "summary": "Comforting tomato soup with fresh basil and a hint of cream.",
+      "readyInMinutes": 30,
+      "ingredients": ["tomato", "basil", "onion", "garlic", "olive oil", "cream", "salt"],
+      "instructions": [
+        "Sauté onion and garlic in olive oil.",
+        "Add tomatoes, simmer and blend.",
+        "Finish with basil and cream. Season to taste."
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Grilled Lemon Herb Chicken",
+      "image": "https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=1200&auto=format&fit=crop",
+      "summary": "Juicy chicken marinated with lemon, herbs, and olive oil.",
+      "readyInMinutes": 35,
+      "ingredients": ["chicken", "lemon", "oregano", "garlic", "olive oil", "salt", "pepper"],
+      "instructions": [
+        "Marinate chicken with lemon juice, herbs, garlic, oil, salt and pepper.",
+        "Grill over medium-high heat until cooked through.",
+        "Rest and serve with lemon wedges."
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Veggie Stir-Fry",
+      "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1200&auto=format&fit=crop",
+      "summary": "Crisp vegetables stir-fried in a savory soy-ginger sauce.",
+      "readyInMinutes": 20,
+      "ingredients": ["broccoli", "bell pepper", "carrot", "soy sauce", "ginger", "garlic"],
+      "instructions": [
+        "Prep and slice vegetables.",
+        "Stir-fry in hot oil, add soy sauce, ginger, garlic.",
+        "Cook until tender-crisp; serve over rice."
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Avocado Toast",
+      "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop",
+      "summary": "Toasted bread topped with creamy avocado and optional toppings.",
+      "readyInMinutes": 10,
+      "ingredients": ["bread", "avocado", "lemon", "salt", "pepper", "chili flakes"],
+      "instructions": [
+        "Toast bread.",
+        "Mash avocado with lemon, salt, and pepper.",
+        "Spread on toast and top with chili flakes."
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Beef Tacos",
+      "image": "https://images.unsplash.com/photo-1617704716344-c2c15f23c4ec?q=80&w=1200&auto=format&fit=crop",
+      "summary": "Seasoned ground beef tacos with fresh toppings.",
+      "readyInMinutes": 25,
+      "ingredients": ["beef", "taco seasoning", "tortillas", "lettuce", "tomato", "cheddar"],
+      "instructions": [
+        "Cook beef with seasoning.",
+        "Warm tortillas.",
+        "Assemble tacos with toppings."
+      ]
+    },
+    {
+      "id": "7",
+      "title": "Berry Parfait",
+      "image": "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?q=80&w=1200&auto=format&fit=crop",
+      "summary": "Layers of yogurt, granola, and fresh berries.",
+      "readyInMinutes": 5,
+      "ingredients": ["yogurt", "granola", "strawberry", "blueberry", "honey"],
+      "instructions": [
+        "Layer yogurt, granola, and berries in a glass.",
+        "Drizzle with honey and serve."
+      ]
+    },
+    {
+      "id": "8",
+      "title": "Shrimp Scampi",
+      "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=1200&auto=format&fit=crop",
+      "summary": "Garlic butter shrimp with lemon over pasta.",
+      "readyInMinutes": 20,
+      "ingredients": ["shrimp", "garlic", "butter", "lemon", "parsley", "pasta"],
+      "instructions": [
+        "Sauté garlic in butter.",
+        "Add shrimp and cook until pink.",
+        "Add lemon and parsley; serve over pasta."
+      ]
+    },
+    {
+      "id": "9",
+      "title": "Caprese Salad",
+      "image": "https://images.unsplash.com/photo-1476127396924-92b3299a41a0?q=80&w=1200&auto=format&fit=crop",
+      "summary": "Fresh mozzarella, tomatoes, and basil drizzled with balsamic.",
+      "readyInMinutes": 10,
+      "ingredients": ["mozzarella", "tomato", "basil", "balsamic", "olive oil", "salt"],
+      "instructions": [
+        "Slice mozzarella and tomatoes.",
+        "Layer with basil.",
+        "Drizzle with balsamic and olive oil; season with salt."
+      ]
+    }
+  ]
+}

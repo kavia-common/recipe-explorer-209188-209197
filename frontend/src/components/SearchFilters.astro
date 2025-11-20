@@ -1,0 +1,36 @@
+---
+const { initialKeyword = "", initialIngredients = "" } = Astro.props as {
+  initialKeyword?: string;
+  initialIngredients?: string;
+};
+---
+<aside class="sidebar" role="complementary" aria-label="Search and filters">
+  <h2 class="section-title">Search</h2>
+  <form id="search-form" class="search-form" role="search" aria-label="Recipe search">
+    <label for="q" class="muted">Keyword</label>
+    <input id="q" name="q" class="input" placeholder="e.g., pasta, curry" value={initialKeyword} />
+    <div style="height: .5rem;"></div>
+    <label for="ing" class="muted">Ingredients (comma separated)</label>
+    <input id="ing" name="ing" class="input" placeholder="e.g., tomato, basil" value={initialIngredients} />
+    <div style="height: .75rem;"></div>
+    <button class="primary-btn" type="submit">Search</button>
+    <div style="margin-top:.5rem" class="muted">Tip: press <kbd class="kbd">Enter</kbd> to search</div>
+  </form>
+</aside>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('search-form');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = new FormData(form).get('q') || '';
+      const ing = new FormData(form).get('ing') || '';
+      const params = new URLSearchParams();
+      if (String(q).trim()) params.set('q', String(q).trim());
+      if (String(ing).trim()) params.set('ing', String(ing).trim());
+      const qs = params.toString();
+      window.location.href = qs ? `/search?${qs}` : '/search';
+    });
+  });
+</script>

@@ -1,0 +1,73 @@
+---
+import type { Recipe } from "../lib/types";
+import { isBookmarked, toggleBookmark } from "../lib/storage.ts";
+
+const { recipe } = Astro.props as { recipe: Recipe };
+
+const bookmarked = await isBookmarked(recipe.id);
+---
+<article class="card" aria-labelledby={`recipe-title-${recipe.id}`}>
+  <a href={`/recipe/${recipe.id}`} aria-label={`Open ${recipe.title}`}>
+    <img class="thumb" src={recipe.image} alt={recipe.title} loading="lazy" />
+  </a>
+  <div class="content">
+    <div class="pill" aria-label={`Ready in ${recipe.readyInMinutes} minutes`}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 8v5l3 3m6-4a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      {recipe.readyInMinutes} min
+    </div>
+    <h3 id={`recipe-title-${recipe.id}`} style="margin: 0.25rem 0 0.15rem;">
+      <a href={`/recipe/${recipe.id}`}>{recipe.title}</a>
+    </h3>
+    <p class="muted" style="margin: 0;">{recipe.summary}</p>
+    <div class="actions" style="margin-top: .4rem;">
+      <button
+        class="secondary-btn"
+        aria-pressed={bookmarked ? "true" : "false"}
+        data-id={recipe.id}
+        data-action="toggle-bookmark"
+        data-title={recipe.title}
+      >
+        {bookmarked ? "Saved ✓" : "Save"}
+      </button>
+      <a class="secondary-btn" href={`/recipe/${recipe.id}`} aria-label={`View ${recipe.title}`}>Details</a>
+    </div>
+  </div>
+</article>
+
+<script>
+  // PUBLIC_INTERFACE
+  /** Bind click for bookmarking using localStorage */
+  function initCardBookmark(el) {
+    el.addEventListener('click', async (e) => {
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (target.dataset.action === 'toggle-bookmark') {
+        const id = target.dataset.id;
+        const title = target.dataset.title || '';
+        if (!id) return;
+        try {
+          const { toggleBookmark } = await import('../lib/storage.ts');
+          const saved = await toggleBookmark(id, title);
+          target.setAttribute('aria-pressed', saved ? 'true' : 'false');
+          target.textContent = saved ? 'Saved ✓' : 'Save';
+        } catch (err) {
+          console.error('Bookmark toggle failed', err);
+          target.textContent = 'Error';
+        }
+      }
+    });
+  }
+
+  if (document.currentScript) {
+    const host = document.currentScript.closest('article');
+    if (host) initCardBookmark(host);
+  } else {
+    // Fallback init
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('article .secondary-btn[data-action="toggle-bookmark"]').forEach(btn => {
+        const article = btn.closest('article');
+        if (article) initCardBookmark(article);
+      });
+    });
+  }
+</script>

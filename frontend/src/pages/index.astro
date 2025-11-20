@@ -1,11 +1,18 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import MainLayout from "../layouts/MainLayout.astro";
+import RecipeCard from "../components/RecipeCard.astro";
+import { fetchRecipes } from "../lib/api";
+const recipes = await fetchRecipes();
+const featured = recipes.slice(0, 9);
 ---
-
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout title="Recipe Explorer — Home">
+  <section aria-labelledby="featured-title">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin:.5rem 0 1rem;">
+      <h1 id="featured-title" style="margin:0;">Featured Recipes</h1>
+      <a class="secondary-btn" href="/search">Search all</a>
+    </div>
+    <div class="card-grid">
+      {featured.map((r) => (<RecipeCard recipe={r} />))}
+    </div>
+  </section>
+</MainLayout>

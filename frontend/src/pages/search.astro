@@ -1,0 +1,35 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import SearchFilters from "../components/SearchFilters.astro";
+import RecipeCard from "../components/RecipeCard.astro";
+import { fetchRecipes, filterRecipes } from "../lib/api";
+
+export const prerender = true;
+
+const url = new URL(Astro.request.url);
+const q = url.searchParams.get("q") ?? "";
+const ing = url.searchParams.get("ing") ?? "";
+
+const all = await fetchRecipes();
+const filtered = filterRecipes(all, q, ing);
+---
+<MainLayout title="Search Recipes">
+  <div class="layout">
+    <SearchFilters initialKeyword={q} initialIngredients={ing} />
+    <section aria-labelledby="results-title">
+      <h1 id="results-title" style="margin-top:0;">Results</h1>
+      <p class="muted" style="margin:.25rem 0 1rem;">
+        {filtered.length} {filtered.length === 1 ? "recipe" : "recipes"} found
+      </p>
+      {filtered.length === 0 ? (
+        <div class="card" style="padding:1rem;">
+          <p>No recipes match your search. Try different keywords or ingredients.</p>
+        </div>
+      ) : (
+        <div class="card-grid">
+          {filtered.map((r) => (<RecipeCard recipe={r} />))}
+        </div>
+      )}
+    </section>
+  </div>
+</MainLayout>

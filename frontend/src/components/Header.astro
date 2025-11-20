@@ -1,0 +1,21 @@
+---
+import { getBookmarks } from "../lib/storage.ts";
+const count = await getBookmarks().then(b => b.length).catch(() => 0);
+---
+<header class="site-header" role="banner">
+  <div class="container navbar">
+    <a href="/" class="brand" aria-label="Recipe Explorer home">
+      <span class="brand-badge" aria-hidden="true">
+        <span class="badge-dot"></span>
+      </span>
+      <span>Recipe Explorer</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/">Home</a>
+      <a href="/search">Search</a>
+      <a href="/bookmarks" aria-label="Bookmarks">Bookmarks <span class="badge" aria-label={`${count} saved`}>{count}</span></a>
+      <a class="primary-btn" href="/search" aria-label="Start searching recipes">Explore</a>
+    </nav>
+  </div>
+</header>

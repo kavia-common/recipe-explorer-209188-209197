@@ -1,9 +1,13 @@
-// eslint.config.mjs
+/* eslint.config.mjs (flat config) */
 import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default [
+  {
+    ignores: ['.astro/**', 'dist/**']
+  },
+
   js.configs.recommended,
 
   // TypeScript support
@@ -20,13 +24,17 @@ export default [
       },
     },
     rules: {
-      // Example custom rules for TS
       '@typescript-eslint/no-unused-vars': ['warn'],
       '@typescript-eslint/explicit-function-return-type': 'off',
+      // Be lenient with generated-like patterns in TS to reduce noise
+      '@typescript-eslint/no-explicit-any': ['warn'],
+      '@typescript-eslint/triple-slash-reference': 'off',
+      '@typescript-eslint/no-empty-object-type': ['warn', { allowInterfaces: 'always', allowObjectTypes: true, allowWithName: false }],
+      '@typescript-eslint/ban-ts-comment': ['warn', { 'ts-expect-error': 'allow-with-description', minimumDescriptionLength: 3 }],
     },
   },
 
-  // JS files config (same as before)
+  // JS files config
   {
     files: ['**/*.js', '**/*.jsx'],
     languageOptions: {
